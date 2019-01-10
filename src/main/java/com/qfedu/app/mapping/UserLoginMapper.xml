@@ -102,10 +102,11 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <!--通过名字查找user-->
-  <select id="selectUserLoginByName" parameterType="string">
-    SELECT * from t_user_login
+  <select id="selectUserLoginByName" parameterType="string" resultType="com.qfedu.app.entity.UserLogin">
+    SELECT
+    <include refid="Base_Column_List" />
+     from t_user_login
   WHERE name= #{name,jdbcType=VARCHAR}
   </select>
-
 
 </mapper>

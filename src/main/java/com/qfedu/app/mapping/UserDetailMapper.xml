@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qfedu.app.dao.UserDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.qfedu.app.entity.UserDetail" >
+    <id column="detail_id" property="detailId" jdbcType="INTEGER" />
+    <result column="detail_uid" property="detailUid" jdbcType="INTEGER" />
+    <result column="detail_imgurl" property="detailImgurl" jdbcType="VARCHAR" />
+    <result column="detail_focus" property="detailFocus" jdbcType="VARCHAR" />
+    <result column="detail_fans" property="detailFans" jdbcType="VARCHAR" />
+    <result column="flag" property="flag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    detail_id, detail_uid, detail_imgurl, detail_focus, detail_fans, flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_user_detail
+    where detail_id = #{detailId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_user_detail
+    where detail_id = #{detailId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qfedu.app.entity.UserDetail" >
+    insert into t_user_detail (detail_id, detail_uid, detail_imgurl,
+      detail_focus, detail_fans, flag
+      )
+    values (#{detailId,jdbcType=INTEGER}, #{detailUid,jdbcType=INTEGER}, #{detailImgurl,jdbcType=VARCHAR},
+      #{detailFocus,jdbcType=VARCHAR}, #{detailFans,jdbcType=VARCHAR}, #{flag,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qfedu.app.entity.UserDetail" >
+    insert into t_user_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="detailId != null" >
+        detail_id,
+      </if>
+      <if test="detailUid != null" >
+        detail_uid,
+      </if>
+      <if test="detailImgurl != null" >
+        detail_imgurl,
+      </if>
+      <if test="detailFocus != null" >
+        detail_focus,
+      </if>
+      <if test="detailFans != null" >
+        detail_fans,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="detailId != null" >
+        #{detailId,jdbcType=INTEGER},
+      </if>
+      <if test="detailUid != null" >
+        #{detailUid,jdbcType=INTEGER},
+      </if>
+      <if test="detailImgurl != null" >
+        #{detailImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="detailFocus != null" >
+        #{detailFocus,jdbcType=VARCHAR},
+      </if>
+      <if test="detailFans != null" >
+        #{detailFans,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qfedu.app.entity.UserDetail" >
+    update t_user_detail
+    <set >
+      <if test="detailUid != null" >
+        detail_uid = #{detailUid,jdbcType=INTEGER},
+      </if>
+      <if test="detailImgurl != null" >
+        detail_imgurl = #{detailImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="detailFocus != null" >
+        detail_focus = #{detailFocus,jdbcType=VARCHAR},
+      </if>
+      <if test="detailFans != null" >
+        detail_fans = #{detailFans,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where detail_id = #{detailId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qfedu.app.entity.UserDetail" >
+    update t_user_detail
+    set detail_uid = #{detailUid,jdbcType=INTEGER},
+      detail_imgurl = #{detailImgurl,jdbcType=VARCHAR},
+      detail_focus = #{detailFocus,jdbcType=VARCHAR},
+      detail_fans = #{detailFans,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=INTEGER}
+    where detail_id = #{detailId,jdbcType=INTEGER}
+  </update>
+
+  <!--通过id查找user详细信息-->
+  <select id="selectUserDetailById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+   SELECT d.* FROM t_user_detail d
+  INNER JOIN t_user_login l
+  ON d.detail_uid=l.id
+  WHERE l.id = #{uid,jdbcType=INTEGER}
+  </select>
+</mapper>
