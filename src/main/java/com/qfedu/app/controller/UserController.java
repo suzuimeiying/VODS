@@ -5,8 +5,10 @@ import com.qfedu.app.entity.UserDetail;
 import com.qfedu.app.entity.UserLogin;
 import com.qfedu.app.service.UserService;
 import com.qfedu.app.util.AES;
+import com.qfedu.app.util.JWT;
 import com.qfedu.app.vo.ResultVo;
 import io.swagger.annotations.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
