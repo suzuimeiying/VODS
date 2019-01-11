@@ -1,100 +1,110 @@
 package com.qfedu.app.util;
 
-import com.alibaba.druid.util.Base64;
-
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
+import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /*
  * AES对称加密和解密
  */
-
 public class AES {
-	private static final String KEY_ALGORITHM = "AES";
-	private static final String DEFAULT_CIPHER_ALGORITHM = "AES/ECB/PKCS5Padding";//默认的加密算法
+    public static String parseByte2HexStr(byte buf[]) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < buf.length; i++) {
+            String hex = Integer.toHexString(buf[i] & 0xFF);
+            if (hex.length() == 1) {
+                hex = '0' + hex;
+            }
+            sb.append(hex.toUpperCase());
+        }
+        return sb.toString();
+    }
 
-	/**
-	 * AES 加密操作
-	 *
-	 * @param content 待加密内容
-	 * @param password 加密密码
-	 * @return 返回Base64转码后的加密数据
-	 */
-	public static String encrypt(String content, String password) {
-		try {
-			Cipher cipher = Cipher.getInstance(DEFAULT_CIPHER_ALGORITHM);// 创建密码器
+    /**
+     * 将16进制转换为二进制 
+     *     * @param hexStr 
+     *     * @return 
+     *    
+     */
+    public static byte[] parseHexStr2Byte(String hexStr) {
+        if (hexStr.length() < 1) {
+            return null;
+        }
+        byte[] result = new byte[hexStr.length() / 2];
+        for (int i = 0; i < hexStr.length() / 2; i++) {
+            int high = Integer.parseInt(hexStr.substring(i * 2, i * 2 + 1), 16);
+            int low = Integer.parseInt(hexStr.substring(i * 2 + 1, i * 2 + 2), 16);
+            result[i] = (byte) (high * 16 + low);
+        }
+        return result;
+    }
+// 加密
 
-			byte[] byteContent = content.getBytes("utf-8");
+    public static String Encrypt(String sSrc, String sKey) throws Exception {
+//        if (sKey == null) {
+//            System.out.print("Key为空null");
+//            return null;
+//        }
+//            // 判断Key是否为16位
+//        if (sKey.length() != 16) {
+//            System.out.print("Key长度不是16位");
+//            return null;
+//        }
+        byte[] raw = sKey.getBytes("utf-8");
+        SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
+        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");//"算法/模式/补码方式"
+        cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
+        byte[] encrypted = cipher.doFinal(sSrc.getBytes("utf-8"));
 
-			cipher.init(Cipher.ENCRYPT_MODE, getSecretKey(password));// 初始化为加密模式的密码器
+        return parseByte2HexStr(encrypted);//此处使用BASE64做转码功能，同时能起到2次加密的作用。
+    }
 
-			byte[] result = cipher.doFinal(byteContent);// 加密
+    // 解密
+    public static String Decrypt(String sSrc, String sKey) throws Exception {
+        try {
+            // 判断Key是否正确
+            if (sKey == null) {
+                System.out.print("Key为空null");
+                return null;
+            }
+            // 判断Key是否为16位
+            if (sKey.length() != 16) {
+                System.out.print("Key长度不是16位");
+                return null;
+            }
+            byte[] raw = sKey.getBytes("utf-8");
+            SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            cipher.init(Cipher.DECRYPT_MODE, skeySpec);
 
-			//return Base64.encodeBase64String(result);//通过Base64转码返回
-			return Base64.byteArrayToBase64(result);
-		} catch (Exception ex) {
-			Logger.getLogger(AES.class.getName()).log(Level.SEVERE, null, ex);
-		}
 
-		return null;
-	}
+            try {
+                byte[] original = cipher.doFinal(parseHexStr2Byte(sSrc));
+                String originalString = new String(original, "utf-8");
+                return originalString;
+            } catch (Exception e) {
+                System.out.println(e.toString());
+                return null;
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
+    }
 
-	/**
-	 * AES 解密操作
-	 *
-	 * @param content
-	 * @param password
-	 * @return
-	 */
-	public static String decrypt(String content, String password) {
 
-		try {
-			//实例化
-			Cipher cipher = Cipher.getInstance(DEFAULT_CIPHER_ALGORITHM);
+   /* public static void main(String[] args) throws Exception {
 
-			//使用密钥初始化，设置为解密模式
-			cipher.init(Cipher.DECRYPT_MODE, getSecretKey(password));
+        // 此处使用AES-128-ECB加密模式，key需要为16位。
 
-			//执行操作
-			byte[] result = cipher.doFinal(Base64.base64ToByteArray(content));
+        String cKey = "1234567890123456";
+        // 需要加密的字串
+        String cSrc = "123123";
+        System.out.println(cSrc);
+        // 加密
+        String enString = AES.Encrypt(cSrc, cKey);
+        System.out.println("加密后的字串是：" + enString);
 
-			return new String(result, "utf-8");
-		} catch (Exception ex) {
-			Logger.getLogger(AES.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		return null;
-	}
-
-	/**
-	 * 生成加密秘钥
-	 *
-	 * @return
-	 */
-	private static SecretKeySpec getSecretKey(final String password) {
-		//返回生成指定算法密钥生成器的 KeyGenerator 对象
-		KeyGenerator kg = null;
-
-		try {
-			kg = KeyGenerator.getInstance(KEY_ALGORITHM);
-
-			//AES 要求密钥长度为 128
-			kg.init(128, new SecureRandom(password.getBytes()));
-
-			//生成一个密钥
-			SecretKey secretKey = kg.generateKey();
-
-			return new SecretKeySpec(secretKey.getEncoded(), KEY_ALGORITHM);// 转换为AES专用密钥
-		} catch (NoSuchAlgorithmException ex) {
-			Logger.getLogger(AES.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		return null;
-	}
+        // 解密
+        String DeString = AES.Decrypt(enString, cKey);
+        System.out.println("解密后的字串是：" + DeString);
+    }*/
 }
