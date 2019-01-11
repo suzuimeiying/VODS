@@ -6,12 +6,10 @@ import com.qfedu.app.entity.UserDetail;
 import com.qfedu.app.entity.UserLogin;
 import com.qfedu.app.service.UserService;
 import com.qfedu.app.util.AES;
+import com.qfedu.app.util.JWT;
 import com.qfedu.app.vo.ResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.xt.tutorial.utils.JWT;
-
-import java.util.Map;
 
 
 @Service
@@ -46,7 +44,7 @@ public class UserServiceImpl implements UserService {
             //存在就判断密码正确与否
             try {
                 if ((user.getPassword()).equals(AES.Encrypt(password,"1234567890123456"))) {
-                     //登录成功
+                    //登录成功
                     ResultVo resultVo = ResultVo.setOK();
 
                     resultVo.putDataValue("user",user);
@@ -57,7 +55,7 @@ public class UserServiceImpl implements UserService {
                     }
                     return resultVo;
 
-                 }
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -69,6 +67,7 @@ public class UserServiceImpl implements UserService {
     //通过login_id查找user详细信息
     @Override
     public UserDetail selectUserDetailById(Integer uid) {
+
         return userDetailDao.selectUserDetailById(uid);
     }
 
