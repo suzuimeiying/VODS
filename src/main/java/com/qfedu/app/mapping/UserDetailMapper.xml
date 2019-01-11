@@ -108,7 +108,7 @@
   <select id="selectUserDetailById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
    SELECT d.* FROM t_user_detail d
   INNER JOIN t_user_login l
-  ON d.detail_uid=l.id
+  ON d.detail_id=l.id
   WHERE l.id = #{uid,jdbcType=INTEGER}
   </select>
 </mapper>
