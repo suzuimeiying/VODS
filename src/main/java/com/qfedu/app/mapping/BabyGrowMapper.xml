@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.app.dao.BabyGrowMapper">
+  <resultMap id="BaseResultMap" type="com.qfedu.app.entity.BabyGrow">
+    <id column="grow_id" jdbcType="INTEGER" property="growId" />
+    <result column="grow_babyid" jdbcType="INTEGER" property="growBabyid" />
+    <result column="grow_time" jdbcType="DATE" property="growTime" />
+    <result column="grow_marke" jdbcType="VARCHAR" property="growMarke" />
+    <result column="grow_height" jdbcType="VARCHAR" property="growHeight" />
+    <result column="grow_weight" jdbcType="VARCHAR" property="growWeight" />
+    <result column="grow_headsize" jdbcType="VARCHAR" property="growHeadsize" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    grow_id, grow_babyid, grow_time, grow_marke, grow_height, grow_weight, grow_headsize, 
+    flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_babygrow
+    where grow_id = #{growId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_babygrow
+    where grow_id = #{growId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qfedu.app.entity.BabyGrow">
+    insert into t_babygrow (grow_id, grow_babyid, grow_time, 
+      grow_marke, grow_height, grow_weight, 
+      grow_headsize, flag)
+    values (#{growId,jdbcType=INTEGER}, #{growBabyid,jdbcType=INTEGER}, #{growTime,jdbcType=DATE}, 
+      #{growMarke,jdbcType=VARCHAR}, #{growHeight,jdbcType=VARCHAR}, #{growWeight,jdbcType=VARCHAR}, 
+      #{growHeadsize,jdbcType=VARCHAR}, #{flag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qfedu.app.entity.BabyGrow">
+    insert into t_babygrow
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="growId != null">
+        grow_id,
+      </if>
+      <if test="growBabyid != null">
+        grow_babyid,
+      </if>
+      <if test="growTime != null">
+        grow_time,
+      </if>
+      <if test="growMarke != null">
+        grow_marke,
+      </if>
+      <if test="growHeight != null">
+        grow_height,
+      </if>
+      <if test="growWeight != null">
+        grow_weight,
+      </if>
+      <if test="growHeadsize != null">
+        grow_headsize,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="growId != null">
+        #{growId,jdbcType=INTEGER},
+      </if>
+      <if test="growBabyid != null">
+        #{growBabyid,jdbcType=INTEGER},
+      </if>
+      <if test="growTime != null">
+        #{growTime,jdbcType=DATE},
+      </if>
+      <if test="growMarke != null">
+        #{growMarke,jdbcType=VARCHAR},
+      </if>
+      <if test="growHeight != null">
+        #{growHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="growWeight != null">
+        #{growWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="growHeadsize != null">
+        #{growHeadsize,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qfedu.app.entity.BabyGrow">
+    update t_babygrow
+    <set>
+      <if test="growBabyid != null">
+        grow_babyid = #{growBabyid,jdbcType=INTEGER},
+      </if>
+      <if test="growTime != null">
+        grow_time = #{growTime,jdbcType=DATE},
+      </if>
+      <if test="growMarke != null">
+        grow_marke = #{growMarke,jdbcType=VARCHAR},
+      </if>
+      <if test="growHeight != null">
+        grow_height = #{growHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="growWeight != null">
+        grow_weight = #{growWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="growHeadsize != null">
+        grow_headsize = #{growHeadsize,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where grow_id = #{growId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qfedu.app.entity.BabyGrow">
+    update t_babygrow
+    set grow_babyid = #{growBabyid,jdbcType=INTEGER},
+      grow_time = #{growTime,jdbcType=DATE},
+      grow_marke = #{growMarke,jdbcType=VARCHAR},
+      grow_height = #{growHeight,jdbcType=VARCHAR},
+      grow_weight = #{growWeight,jdbcType=VARCHAR},
+      grow_headsize = #{growHeadsize,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=INTEGER}
+    where grow_id = #{growId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="babyGrow" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+
+    SELECT * FROM t_baby a
+    INNER JOIN t_babygrow b
+    ON a.baby_id = b.grow_babyid
+    WHERE a.baby_id=#{babyId}
+
+  </select>
+</mapper>
