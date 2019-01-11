@@ -4,9 +4,12 @@ import com.qfedu.app.entity.Goods;
 import com.qfedu.app.service.GoodsService;
 import com.qfedu.app.vo.JsonVo;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,45 +21,32 @@ public class GoodsController {
 
     @Autowired
     private GoodsService goodsService;
-    //添加商品
-    @ApiOperation(notes = "后台添加商品",tags = {"添加商品"},value = "添加")
-    @RequestMapping("/addgoods.do")
-    public JsonVo insert(Goods goods){
 
-        return goodsService.insert(goods);
-
-    }
-    //根据id删除商品
-    @ApiOperation(notes = "后台删除商品",tags = {"删除商品"},value = "删除")
-    @RequestMapping("/deletegoods.do")
-    public JsonVo delete(Integer goodsId){
-
-        return goodsService.deleteById(goodsId);
-
-    }
-
-    //根据id更新商品
-    @ApiOperation(notes = "后天更新商品",tags = {"更新商品"},value = "更新")
-    @RequestMapping("/updategoods.do")
-    public JsonVo update(Goods goods){
-
-        return goodsService.updateById(goods);
-    }
-    //根据传入的flag类型对应商品
-    @ApiOperation(notes = "查询所有商品",tags = {"显示商品首页"},value = "根据flag商品显示")
+    //查询所有的商品
+    @ApiOperation(notes = "查询所有商品",tags = {"优品-显示所有商品"},value = "初始化所有商品展示")
     /*@RequestMapping("/listgoods.do")*/
-    @GetMapping("/listgoods.do")
-    public JsonVo selectAll(Integer flag){
+    @GetMapping("/allgoods.do")
+    public JsonVo selectAllGoods(){
+        return JsonVo.setOK(goodsService.findAllGoods());
+    }
 
-        return goodsService.findAll(flag);
+    //查询所有的相册商品
+    @ApiOperation(notes = "查询所有的相册商品",tags = {"我的-相册商品"},value = "我的-制作相册-初始化显示所有相册商品")
+    @GetMapping("/allphotogoods.do")
+    public JsonVo selectPhotoGoods(){
+
+        return JsonVo.setOK(goodsService.findPhtotGoods());
     }
 
     //根据商品id查询详细内容
-    @ApiOperation(notes = "根据商品id查询商品内容",tags = {"显示商品信息"},value = "商品id进行查询")
-    @GetMapping("/onegoodsById")
-    public JsonVo selectById(Integer goodsId){
+    @ApiOperation(notes = "根据查询类型id查询商品内容",tags = {"优品-按需查询商品"},value = "查询特定类型商品")
+    @PostMapping("/findgoodsbyflag.do")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "flag",value = "按照清洁flag=1、喂养flag=2、童装flag=3，其他flag=4，展示不同类型商品",paramType = "Integer",required = true),
+    })
+    public JsonVo selectById(Integer flag){
 
-        return   goodsService.selectById(goodsId);
+        return   goodsService.selectgoodsbyflag(flag);
     }
 
 

@@ -130,17 +130,11 @@
   </update>
 
   <!--展示购物车里的所有商品-->
-  <select id="selectAllGoods" resultType="java.util.Map">
-      select
-
+  <select id="selectAllGoods" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_cart
+      where  `cart-flag` = 1
   </select>
-  <!-- 添加-->
-  <insert id="insertCart" >
-    insert into t_cart(cart_id,cart_uid,cart_goodsid,cart_goodscolor,
-    cart_address,cart_goodsnumber,cart_flag) values (null,#{cartUid},#{cartGoodsid},#{cartGoodssize},#{cartGoodscolor},
-    #{cartAddress},#{cartGoodsnumber},#{cartFlag}
-    )
-
-  </insert>
 
 </mapper>

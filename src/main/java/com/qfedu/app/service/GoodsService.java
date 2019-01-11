@@ -4,16 +4,16 @@ import com.qfedu.app.entity.Goods;
 import com.qfedu.app.vo.JsonVo;
 
 public interface GoodsService {
-    //增
-    JsonVo insert(Goods goods);
 
-    //删
-    JsonVo deleteById(Integer goodsId);
+    //查询全部商品（优品）
+    JsonVo findAllGoods();
 
-    //改
-    JsonVo updateById(Goods goods);
-    //查询全部
-    JsonVo findAll(Integer flag);
+
+    //查询全部相册商品
+    JsonVo findPhtotGoods();
+
+    //查询特定类型商品根据flag
+    JsonVo selectgoodsbyflag(Integer flag);
 
     //根据商品id查询单个商品内容
     JsonVo selectById(Integer flag);

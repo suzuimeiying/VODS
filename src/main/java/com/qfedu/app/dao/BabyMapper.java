@@ -2,7 +2,7 @@ package com.qfedu.app.dao;
 
 
 import com.qfedu.app.entity.Baby;
-import com.qfedu.app.vo.BabyVo;
+import com.qfedu.app.vo.BabyConfigVo;
 
 import java.util.List;
 
@@ -19,6 +19,6 @@ public interface BabyMapper {
 
     int updateByPrimaryKey(Baby record);
 
-    //通过前端返回的用户id查找其bady
-    List<BabyVo> selectBabyInfoById(Integer id);
+    //通过token中的用户（家长）id查找其bady信息（自定义）
+    List<BabyConfigVo> selectBabyInfoById(Integer id);
 }

@@ -117,21 +117,27 @@
   </update>
 
   <!-- 查询所有商品-->
-  <select id="all" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectallgoods" resultMap="BaseResultMap">
 
     select
     <include refid="Base_Column_List" />
     from t_goods
-    where flag=#{flag}
+    where flag != 5
 
   </select>
-<!-- 查询相册商品 flag -->
-<select id="selectphoto" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+<!-- 查询所有的相册商品-->
+<select id="selectphotogoods" resultMap="BaseResultMap">
     select  <include refid="Base_Column_List" />
       from t_goods
       where flag=5
-
 </select>
+  <!-- 查询特定类型商品根据flag -->
+  <select id="selectgoodsbyflag" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select  <include refid="Base_Column_List" />
+    from t_goods
+    where flag= #{flag}
+
+  </select>
 
 
 

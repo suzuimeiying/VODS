@@ -23,10 +23,13 @@ public interface GoodsMapper {
     int updateByPrimaryKey(Goods record);
 
     //查询所有商品
-    List<Goods> all(Integer flag);
+    List<Goods> selectallgoods();
 
     //查询相册商品
-    List <Goods> selectphoto(Integer flag);
+    List <Goods> selectphotogoods();
+
+    //查询特定类型商品根据flag
+    List<Goods> selectgoodsbyflag(Integer flag);
 
 
 }

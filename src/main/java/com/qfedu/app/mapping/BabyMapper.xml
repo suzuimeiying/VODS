@@ -9,6 +9,14 @@
         <result column="baby_birthday" jdbcType="DATE" property="babyBirthday"/>
         <result column="flag" jdbcType="INTEGER" property="flag"/>
     </resultMap>
+    <resultMap id="BaseResultMap2" type="com.qfedu.app.vo.BabyConfigVo">
+        <id column="baby_id" jdbcType="INTEGER" property="babyId"/>
+        <result column="baby_img" jdbcType="VARCHAR" property="babyImg"/>
+        <result column="baby_name" jdbcType="VARCHAR" property="babyName"/>
+        <result column="baby_birthday" jdbcType="DATE" property="babyBirthday"/>
+        <result column="photo_babyid" jdbcType="INTEGER" property="photoBabyid" />
+        <result column="photo_img" jdbcType="VARCHAR" property="photoImg" />
+    </resultMap>
     <sql id="Base_Column_List">
     baby_id, baby_uid, baby_img, baby_name, baby_birthday, flag
   </sql>
@@ -104,10 +112,12 @@
     where baby_id = #{babyId,jdbcType=INTEGER}
   </update>
 
-    <select id="selectBabyInfoById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-      SELECT /*a.baby_img, a.baby_name, a.baby_birthday*/ * from t_baby a
-      INNER JOIN t_user_login b
-      ON a.baby_uid = b.id
-      WHERE b.id = #{id}
+    <!--通过baby家长id查找babyinfo，自定义VO类-->
+    <select id="selectBabyInfoById" resultMap="BaseResultMap2" parameterType="java.lang.Integer">
+      SELECT b.baby_id,b.baby_img,b.baby_name,b.baby_birthday,p.photo_id,p.photo_img FROM t_baby b
+    INNER JOIN t_photo p
+    ON b.baby_id = p.photo_babyid
+    WHERE b.baby_uid =#{uid,jdbcType=INTEGER}
   </select>
+
 </mapper>

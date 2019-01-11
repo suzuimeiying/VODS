@@ -93,7 +93,7 @@ public class UserController {
 
 
     @GetMapping("/my.do")
-    @ApiOperation(notes = "我的主页面初始化用户",tags = {"我的主页面"},value = "初始化")
+    @ApiOperation(notes = "我的主页面初始化用户",tags = {"我的主页面"},value = "我的-页面初始化")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "token",value = "Token",paramType = "string",required = true),
     })

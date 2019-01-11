@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.app.dao.ArticleMapper">
+  <resultMap id="BaseResultMap" type="com.qfedu.app.entity.Article">
+    <id column="article_id" jdbcType="INTEGER" property="articleId" />
+    <result column="article_img" jdbcType="VARCHAR" property="articleImg" />
+    <result column="article_name" jdbcType="VARCHAR" property="articleName" />
+    <result column="article_abstract" jdbcType="VARCHAR" property="articleAbstract" />
+    <result column="article_creatman" jdbcType="VARCHAR" property="articleCreatman" />
+    <result column="article_creattime" jdbcType="VARCHAR" property="articleCreattime" />
+    <result column="article_readnumber" jdbcType="INTEGER" property="articleReadnumber" />
+    <result column="article_url" jdbcType="VARCHAR" property="articleUrl" />
+    <result column="flag" jdbcType="VARCHAR" property="flag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    article_id, article_img, article_name, article_abstract, article_creatman, article_creattime, 
+    article_readnumber, article_url, flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_article
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_article
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qfedu.app.entity.Article">
+    insert into t_article (article_id, article_img, article_name, 
+      article_abstract, article_creatman, article_creattime, 
+      article_readnumber, article_url, flag
+      )
+    values (#{articleId,jdbcType=INTEGER}, #{articleImg,jdbcType=VARCHAR}, #{articleName,jdbcType=VARCHAR}, 
+      #{articleAbstract,jdbcType=VARCHAR}, #{articleCreatman,jdbcType=VARCHAR}, #{articleCreattime,jdbcType=VARCHAR}, 
+      #{articleReadnumber,jdbcType=INTEGER}, #{articleUrl,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qfedu.app.entity.Article">
+    insert into t_article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        article_id,
+      </if>
+      <if test="articleImg != null">
+        article_img,
+      </if>
+      <if test="articleName != null">
+        article_name,
+      </if>
+      <if test="articleAbstract != null">
+        article_abstract,
+      </if>
+      <if test="articleCreatman != null">
+        article_creatman,
+      </if>
+      <if test="articleCreattime != null">
+        article_creattime,
+      </if>
+      <if test="articleReadnumber != null">
+        article_readnumber,
+      </if>
+      <if test="articleUrl != null">
+        article_url,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        #{articleId,jdbcType=INTEGER},
+      </if>
+      <if test="articleImg != null">
+        #{articleImg,jdbcType=VARCHAR},
+      </if>
+      <if test="articleName != null">
+        #{articleName,jdbcType=VARCHAR},
+      </if>
+      <if test="articleAbstract != null">
+        #{articleAbstract,jdbcType=VARCHAR},
+      </if>
+      <if test="articleCreatman != null">
+        #{articleCreatman,jdbcType=VARCHAR},
+      </if>
+      <if test="articleCreattime != null">
+        #{articleCreattime,jdbcType=VARCHAR},
+      </if>
+      <if test="articleReadnumber != null">
+        #{articleReadnumber,jdbcType=INTEGER},
+      </if>
+      <if test="articleUrl != null">
+        #{articleUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qfedu.app.entity.Article">
+    update t_article
+    <set>
+      <if test="articleImg != null">
+        article_img = #{articleImg,jdbcType=VARCHAR},
+      </if>
+      <if test="articleName != null">
+        article_name = #{articleName,jdbcType=VARCHAR},
+      </if>
+      <if test="articleAbstract != null">
+        article_abstract = #{articleAbstract,jdbcType=VARCHAR},
+      </if>
+      <if test="articleCreatman != null">
+        article_creatman = #{articleCreatman,jdbcType=VARCHAR},
+      </if>
+      <if test="articleCreattime != null">
+        article_creattime = #{articleCreattime,jdbcType=VARCHAR},
+      </if>
+      <if test="articleReadnumber != null">
+        article_readnumber = #{articleReadnumber,jdbcType=INTEGER},
+      </if>
+      <if test="articleUrl != null">
+        article_url = #{articleUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qfedu.app.entity.Article">
+    update t_article
+    set article_img = #{articleImg,jdbcType=VARCHAR},
+      article_name = #{articleName,jdbcType=VARCHAR},
+      article_abstract = #{articleAbstract,jdbcType=VARCHAR},
+      article_creatman = #{articleCreatman,jdbcType=VARCHAR},
+      article_creattime = #{articleCreattime,jdbcType=VARCHAR},
+      article_readnumber = #{articleReadnumber,jdbcType=INTEGER},
+      article_url = #{articleUrl,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=VARCHAR}
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </update>
+</mapper>

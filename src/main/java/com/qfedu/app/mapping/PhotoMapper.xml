@@ -104,10 +104,11 @@
     where photo_id = #{photoId,jdbcType=INTEGER}
   </update>
 
+
+  <!--查询所有的baby照片-->
   <select id="findAllPhoto" resultMap="BaseResultMap" resultType="java.lang.Integer">
-        SELECT * FROM t_photo a
-        INNER JOIN t_baby b
-        ON a.photo_babyid = b.baby_id
-        WHERE b.baby_id = #{babyId}
+        SELECT <include refid="Base_Column_List" />
+        FROM t_photo
+        WHERE photo_babyid = #{babyId}
   </select>
 </mapper>

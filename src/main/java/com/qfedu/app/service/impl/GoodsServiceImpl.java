@@ -15,42 +15,37 @@ public class GoodsServiceImpl implements GoodsService {
     private GoodsMapper goodsDao;
 
 
-    //添加商品
-    @Override
-    public JsonVo insert(Goods goods) {
-       if(goodsDao.insert(goods)>0){
-           return JsonVo.setOK(1);
-       }
-
-        return JsonVo.setERROR();
-    }
-    //根据id删除
-    @Override
-    public JsonVo deleteById(Integer goodsId) {
-        if(goodsDao.deleteByPrimaryKey(goodsId)!=0){
-            return JsonVo.setOK(1);
-        }
-        return JsonVo.setERROR();
-    }
-
-    //更新商品
-    @Override
-    public JsonVo updateById(Goods goods) {
-       if( goodsDao.updateByPrimaryKey(goods)>0){
-           return JsonVo.setOK(1);
-       }
-        return JsonVo.setERROR();
-    }
     //查询所有商品
     @Override
-    public JsonVo findAll(Integer flag) {
-        List<Goods> all = goodsDao.all(flag);
+    public JsonVo findAllGoods() {
+        List<Goods> all = goodsDao.selectallgoods();
 
         if (all!=null){
             return JsonVo.setOK(all);
         }
             return  JsonVo.setERROR();
     }
+    //查询所有相册商品
+    @Override
+    public JsonVo findPhtotGoods() {
+        List<Goods> all = goodsDao.selectphotogoods();
+
+        if (all!=null){
+            return JsonVo.setOK(all);
+        }
+        return  JsonVo.setERROR();
+    }
+
+    //查询特定类型商品根据flag
+    @Override
+    public JsonVo selectgoodsbyflag(Integer flag) {
+        List<Goods> goodsList = goodsDao.selectgoodsbyflag(flag);
+        if ( goodsList != null){
+            return JsonVo.setOK(goodsList);
+        }
+        return JsonVo.setERROR();
+    }
+
     //根据商品id查询单个商品内容
     @Override
     public JsonVo selectById(Integer id) {

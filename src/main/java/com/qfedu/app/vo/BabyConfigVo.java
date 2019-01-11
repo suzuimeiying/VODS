@@ -2,10 +2,8 @@ package com.qfedu.app.vo;
 
 import java.util.Date;
 
-public class PhotoVo {
+public class BabyConfigVo {
     private Integer babyId;
-
-    private Integer babyUid;
 
     private String babyImg;
 
@@ -13,13 +11,9 @@ public class PhotoVo {
 
     private Date babyBirthday;
 
-    private Integer flag;
+    private String  photoId;
 
-    private Integer photoId;
-
-    private Integer photoBabyid;
-
-    private String photoImg;
+    private  String photoImg;
 
     public Integer getBabyId() {
         return babyId;
@@ -27,14 +21,6 @@ public class PhotoVo {
 
     public void setBabyId(Integer babyId) {
         this.babyId = babyId;
-    }
-
-    public Integer getBabyUid() {
-        return babyUid;
-    }
-
-    public void setBabyUid(Integer babyUid) {
-        this.babyUid = babyUid;
     }
 
     public String getBabyImg() {
@@ -61,28 +47,12 @@ public class PhotoVo {
         this.babyBirthday = babyBirthday;
     }
 
-    public Integer getFlag() {
-        return flag;
-    }
-
-    public void setFlag(Integer flag) {
-        this.flag = flag;
-    }
-
-    public Integer getPhotoId() {
+    public String getPhotoId() {
         return photoId;
     }
 
-    public void setPhotoId(Integer photoId) {
+    public void setPhotoId(String photoId) {
         this.photoId = photoId;
-    }
-
-    public Integer getPhotoBabyid() {
-        return photoBabyid;
-    }
-
-    public void setPhotoBabyid(Integer photoBabyid) {
-        this.photoBabyid = photoBabyid;
     }
 
     public String getPhotoImg() {
