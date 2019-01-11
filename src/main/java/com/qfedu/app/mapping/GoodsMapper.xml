@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.app.dao.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.qfedu.app.entity.Goods">
+    <id column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="goods_img" jdbcType="VARCHAR" property="goodsImg" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_price" jdbcType="VARCHAR" property="goodsPrice" />
+    <result column="goods_vipprice" jdbcType="VARCHAR" property="goodsVipprice" />
+    <result column="goods_marke" jdbcType="VARCHAR" property="goodsMarke" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    goods_id, goods_img, goods_name, goods_price, goods_vipprice, goods_marke, flag
+  </sql>
+  <!-- 根据商品id查询单个商品内容-->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qfedu.app.entity.Goods">
+    insert into t_goods (goods_id, goods_img, goods_name, 
+      goods_price, goods_vipprice, goods_marke, 
+      flag)
+    values (#{goodsId,jdbcType=INTEGER}, #{goodsImg,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, 
+      #{goodsPrice,jdbcType=VARCHAR}, #{goodsVipprice,jdbcType=VARCHAR}, #{goodsMarke,jdbcType=VARCHAR}, 
+      #{flag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qfedu.app.entity.Goods">
+    insert into t_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="goodsImg != null">
+        goods_img,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodsPrice != null">
+        goods_price,
+      </if>
+      <if test="goodsVipprice != null">
+        goods_vipprice,
+      </if>
+      <if test="goodsMarke != null">
+        goods_marke,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsImg != null">
+        #{goodsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        #{goodsPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsVipprice != null">
+        #{goodsVipprice,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsMarke != null">
+        #{goodsMarke,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qfedu.app.entity.Goods">
+    update t_goods
+    <set>
+      <if test="goodsImg != null">
+        goods_img = #{goodsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        goods_price = #{goodsPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsVipprice != null">
+        goods_vipprice = #{goodsVipprice,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsMarke != null">
+        goods_marke = #{goodsMarke,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qfedu.app.entity.Goods">
+    update t_goods
+    set goods_img = #{goodsImg,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_price = #{goodsPrice,jdbcType=VARCHAR},
+      goods_vipprice = #{goodsVipprice,jdbcType=VARCHAR},
+      goods_marke = #{goodsMarke,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=INTEGER}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+
+  <!-- 查询所有商品-->
+  <select id="all" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+    select
+    <include refid="Base_Column_List" />
+    from t_goods
+    where flag=#{flag}
+
+  </select>
+<!-- 查询相册商品 flag -->
+<select id="selectphoto" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select  <include refid="Base_Column_List" />
+      from t_goods
+      where flag=5
+
+</select>
+
+
+
+
+</mapper>

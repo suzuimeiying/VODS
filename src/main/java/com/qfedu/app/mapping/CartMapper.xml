@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.app.dao.CartMapper">
+  <resultMap id="BaseResultMap" type="com.qfedu.app.entity.Cart">
+    <id column="cart_id" jdbcType="INTEGER" property="cartId" />
+    <result column="cart_uid" jdbcType="INTEGER" property="cartUid" />
+    <result column="cart_goodsid" jdbcType="INTEGER" property="cartGoodsid" />
+    <result column="cart_goodssize" jdbcType="VARCHAR" property="cartGoodssize" />
+    <result column="cart_goodscolor" jdbcType="VARCHAR" property="cartGoodscolor" />
+    <result column="cart_address" jdbcType="VARCHAR" property="cartAddress" />
+    <result column="cart_goodsnumber" jdbcType="VARCHAR" property="cartGoodsnumber" />
+    <result column="cart-flag" jdbcType="INTEGER" property="cartFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    cart_id, cart_uid, cart_goodsid, cart_goodssize, cart_goodscolor, cart_address, cart_goodsnumber, 
+    cart-flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_cart
+    where cart_id = #{cartId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_cart
+    where cart_id = #{cartId,jdbcType=INTEGER}
+  </delete>
+
+
+  <insert id="insert" parameterType="com.qfedu.app.entity.Cart">
+    insert into t_cart (cart_id, cart_uid, cart_goodsid, 
+      cart_goodssize, cart_goodscolor, cart_address, 
+      cart_goodsnumber, cart-flag)
+    values (#{cartId,jdbcType=INTEGER}, #{cartUid,jdbcType=INTEGER}, #{cartGoodsid,jdbcType=INTEGER}, 
+      #{cartGoodssize,jdbcType=VARCHAR}, #{cartGoodscolor,jdbcType=VARCHAR}, #{cartAddress,jdbcType=VARCHAR}, 
+      #{cartGoodsnumber,jdbcType=VARCHAR}, #{cartFlag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qfedu.app.entity.Cart">
+    insert into t_cart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cartId != null">
+        cart_id,
+      </if>
+      <if test="cartUid != null">
+        cart_uid,
+      </if>
+      <if test="cartGoodsid != null">
+        cart_goodsid,
+      </if>
+      <if test="cartGoodssize != null">
+        cart_goodssize,
+      </if>
+      <if test="cartGoodscolor != null">
+        cart_goodscolor,
+      </if>
+      <if test="cartAddress != null">
+        cart_address,
+      </if>
+      <if test="cartGoodsnumber != null">
+        cart_goodsnumber,
+      </if>
+      <if test="cartFlag != null">
+        cart-flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cartId != null">
+        #{cartId,jdbcType=INTEGER},
+      </if>
+      <if test="cartUid != null">
+        #{cartUid,jdbcType=INTEGER},
+      </if>
+      <if test="cartGoodsid != null">
+        #{cartGoodsid,jdbcType=INTEGER},
+      </if>
+      <if test="cartGoodssize != null">
+        #{cartGoodssize,jdbcType=VARCHAR},
+      </if>
+      <if test="cartGoodscolor != null">
+        #{cartGoodscolor,jdbcType=VARCHAR},
+      </if>
+      <if test="cartAddress != null">
+        #{cartAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cartGoodsnumber != null">
+        #{cartGoodsnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="cartFlag != null">
+        #{cartFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qfedu.app.entity.Cart">
+    update t_cart
+    <set>
+      <if test="cartUid != null">
+        cart_uid = #{cartUid,jdbcType=INTEGER},
+      </if>
+      <if test="cartGoodsid != null">
+        cart_goodsid = #{cartGoodsid,jdbcType=INTEGER},
+      </if>
+      <if test="cartGoodssize != null">
+        cart_goodssize = #{cartGoodssize,jdbcType=VARCHAR},
+      </if>
+      <if test="cartGoodscolor != null">
+        cart_goodscolor = #{cartGoodscolor,jdbcType=VARCHAR},
+      </if>
+      <if test="cartAddress != null">
+        cart_address = #{cartAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cartGoodsnumber != null">
+        cart_goodsnumber = #{cartGoodsnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="cartFlag != null">
+        cart-flag = #{cartFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cart_id = #{cartId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qfedu.app.entity.Cart">
+    update t_cart
+    set cart_uid = #{cartUid,jdbcType=INTEGER},
+      cart_goodsid = #{cartGoodsid,jdbcType=INTEGER},
+      cart_goodssize = #{cartGoodssize,jdbcType=VARCHAR},
+      cart_goodscolor = #{cartGoodscolor,jdbcType=VARCHAR},
+      cart_address = #{cartAddress,jdbcType=VARCHAR},
+      cart_goodsnumber = #{cartGoodsnumber,jdbcType=VARCHAR},
+      cart-flag = #{cartFlag,jdbcType=INTEGER}
+    where cart_id = #{cartId,jdbcType=INTEGER}
+  </update>
+
+  <!--展示购物车里的所有商品-->
+  <select id="selectAllGoods" resultType="java.util.Map">
+      select
+
+  </select>
+  <!-- 添加-->
+  <insert id="insertCart" >
+    insert into t_cart(cart_id,cart_uid,cart_goodsid,cart_goodscolor,
+    cart_address,cart_goodsnumber,cart_flag) values (null,#{cartUid},#{cartGoodsid},#{cartGoodssize},#{cartGoodscolor},
+    #{cartAddress},#{cartGoodsnumber},#{cartFlag}
+    )
+
+  </insert>
+
+</mapper>
